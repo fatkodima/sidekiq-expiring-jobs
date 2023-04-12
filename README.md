@@ -1,5 +1,7 @@
 # SidekiqExpiringJobs
 
+[![Build Status](https://github.com/fatkodima/sidekiq-expiring-jobs/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fatkodima/sidekiq-expiring-jobs/actions/workflows/ci.yml)
+
 Support for Sidekiq jobs which expire after a certain length of time.
 Jobs that are set to expire can run as long as they want, but an expiring job must start executing before the expiration time.
 
