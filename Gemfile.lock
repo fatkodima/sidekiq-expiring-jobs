@@ -34,6 +34,8 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.28.0)
       parser (>= 3.2.1.0)
+    rubocop-minitest (0.30.0)
+      rubocop (>= 1.39, < 2.0)
     ruby-progressbar (1.13.0)
     sidekiq (7.0.8)
       concurrent-ruby (< 2)
@@ -49,6 +51,7 @@ DEPENDENCIES
   minitest (~> 5.0)
   rake (~> 13.0)
   rubocop (< 2)
+  rubocop-minitest
   sidekiq-expiring-jobs!
 
 BUNDLED WITH

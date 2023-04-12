@@ -1,3 +1,5 @@
+require: rubocop-minitest
+
 AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
@@ -9,6 +11,15 @@ Style/StringLiterals:
 Style/Documentation:
   Enabled: false
 
+Style/NumericPredicate:
+  Enabled: false
+
+Layout/EmptyLinesAroundAccessModifier:
+  EnforcedStyle: only_before
+
+Layout/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+
 Naming/FileName:
   Exclude:
     - lib/sidekiq-expiring-jobs.rb
@@ -17,4 +28,7 @@ Gemspec/RequireMFA:
   Enabled: false
 
 Bundler/OrderedGems:
+  Enabled: false
+
+Minitest/EmptyLineBeforeAssertionMethods:
   Enabled: false
