@@ -1,24 +1,72 @@
-# Sidekiq::Expiring::Jobs
+# SidekiqExpiringJobs
 
-TODO: Delete this and the text below, and describe your gem
+Support for Sidekiq jobs which expire after a certain length of time.
+Jobs that are set to expire can run as long as they want, but an expiring job must start executing before the expiration time.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sidekiq/expiring/jobs`. To experiment with that code, run `bin/console` for an interactive prompt.
+Note: Sidekiq Pro has this feature, so please consider upgrading if you can.
+
+## Use Cases
+
+1. Perhaps you want to expire a cache which has a TTL of 30 minutes with a Sidekiq job. If the job doesn't process successfully within 30 minutes, there's no point in executing the job.
+2. You use a Sidekiq job to send a daily digest email. If the job doesn't execute within 24 hours, perhaps you want to skip that day as the user might only care about the latest digest.
+3. You enqueue periodically a Sidekiq job to do some task. If the job doesn't execute before the next period begins, you may skip that job as the newly enqueued job will do the task.
+
+## Requirements
+
+- Ruby 2.7+
+- Sidekiq 6.0+
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
+```ruby
+gem 'sidekiq-expiring-jobs'
+```
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+And then execute:
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+```sh
+$ bundle
+```
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+Or install it yourself as:
 
-## Usage
+```sh
+$ gem install sidekiq-expiring-jobs
+```
 
-TODO: Write usage instructions here
+## Defining Expiration
+
+Statically:
+
+```ruby
+class SomeJob
+  include Sidekiq::Job
+  sidekiq_options expires_in: 1.hour
+  ...
+end
+```
+
+Dynamically, per job:
+
+```ruby
+SomeJob.set(expires_in: 1.day).perform_async(...)
+```
+
+`expires_in` must be a relative time, not an absolute timestamp.
+
+Expiration knows about scheduled jobs: schedule a job to run two hours from now with a one hour expiration and it will expire **three** hours from now.
+
+## Configuration
+
+You can override the following default options:
+
+```ruby
+# A callback that is called when the job is expired.
+# Accepts a job hash as an argument.
+SidekiqExpiringJobs.expiration_callback = ->(job) {}
+```
 
 ## Development
 
@@ -28,7 +76,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sidekiq-expiring-jobs.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fatkodima/sidekiq-expiring-jobs.
 
 ## License
 
