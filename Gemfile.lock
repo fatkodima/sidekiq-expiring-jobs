@@ -52,6 +52,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rubocop (< 2)
   rubocop-minitest
+  sidekiq
   sidekiq-expiring-jobs!
 
 BUNDLED WITH
