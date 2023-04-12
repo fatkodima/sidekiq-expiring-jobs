@@ -14,6 +14,9 @@ Style/Documentation:
 Style/NumericPredicate:
   Enabled: false
 
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
 Layout/EmptyLinesAroundAccessModifier:
   EnforcedStyle: only_before
 
