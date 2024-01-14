@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sidekiq-expiring-jobs (0.1.0)
+    sidekiq-expiring-jobs (0.1.1)
       sidekiq (>= 6.0)
 
 GEM
