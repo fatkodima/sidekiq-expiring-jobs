@@ -17,13 +17,9 @@ module SidekiqExpiringJobs
 
     class Server
       def call(_worker, job, _queue)
-        if (expires_at = job["expires_at"])
-          if expires_at >= Time.now.to_f
-            yield
-          else
-            Sidekiq.logger.info("[SidekiqExpiringJobs] Expired #{job['class']} job (jid=#{job['jid']}) is skipped")
-            SidekiqExpiringJobs.expiration_callback&.call(job)
-          end
+        if job["expires_at"] && job["expires_at"] < Time.now.to_f
+          Sidekiq.logger.info("[SidekiqExpiringJobs] Expired #{job['class']} job (jid=#{job['jid']}) is skipped")
+          SidekiqExpiringJobs.expiration_callback&.call(job)
         else
           yield
         end
