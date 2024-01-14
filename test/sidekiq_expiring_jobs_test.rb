@@ -57,6 +57,13 @@ class SidekiqExpiringJobsTest < TestCase
     assert_match("TestJob performed", out)
   end
 
+  def test_absolute_time_as_expiration
+    error = assert_raises(ArgumentError) do
+      AbsTimeExpiringJob.perform_async
+    end
+    assert_equal ":expires_in must be a relative time, not absolute time", error.message
+  end
+
   def test_expiration_callback
     out = perform_enqueued_jobs(delay: 0.2) do
       ExpiringJob01.perform_async
