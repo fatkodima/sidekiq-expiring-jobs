@@ -15,8 +15,8 @@ Note: Sidekiq Pro has this feature, so please consider upgrading if you can.
 
 ## Requirements
 
-- Ruby 2.7+
-- Sidekiq 6.0+
+- Ruby 3.2+
+- Sidekiq 8.0+
 
 ## Installation
 

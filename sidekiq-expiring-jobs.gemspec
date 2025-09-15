@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   DESC
   spec.homepage = "https://github.com/fatkodima/sidekiq-expiring-jobs"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.7.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.files = Dir["*.{md,txt}", "lib/**/*"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "sidekiq", ">= 6.0"
+  spec.add_dependency "sidekiq", ">= 8.0"
 end

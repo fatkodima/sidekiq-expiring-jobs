@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-@sidekiq_requirement = "~> 7.0"
+@sidekiq_requirement = "~> 8.0"
 
 eval_gemfile "../Gemfile"

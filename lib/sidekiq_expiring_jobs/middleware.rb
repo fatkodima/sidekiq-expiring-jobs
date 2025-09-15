@@ -8,7 +8,8 @@ module SidekiqExpiringJobs
           expires_in = expires_in.to_f
           raise ArgumentError, ":expires_in must be a relative time, not absolute time" if expires_in > 1_000_000_000
 
-          at = job["at"] || job["created_at"]
+          # created_at is stored in milliseconds starting from sidekiq 8.0.
+          at = job["at"] || (job["created_at"] / 1000.0)
           job["expires_at"] = at + expires_in
         end
         yield

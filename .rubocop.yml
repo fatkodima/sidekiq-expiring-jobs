@@ -1,7 +1,8 @@
-require: rubocop-minitest
+plugins:
+  - rubocop-minitest
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
   NewCops: enable
   SuggestExtensions: false
 
@@ -26,6 +27,9 @@ Layout/IndentationConsistency:
 Naming/FileName:
   Exclude:
     - lib/sidekiq-expiring-jobs.rb
+
+Metrics:
+  Enabled: false
 
 Gemspec/RequireMFA:
   Enabled: false
