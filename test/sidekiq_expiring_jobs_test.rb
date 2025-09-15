@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "sidekiq/api"
 require_relative "test_helper"
 require_relative "jobs"
 
@@ -69,6 +70,20 @@ class SidekiqExpiringJobsTest < TestCase
       ExpiringJob01.perform_async
     end
     assert_match("expiration_callback called", out)
+  end
+
+  def test_job_with_existing_expires_at_is_not_modified
+    expires_at = Time.now.to_i + 100
+    ExpiringJob01.set(expires_at: expires_at).perform_async
+
+    job = Sidekiq::Queue.new.to_a.last
+    assert_equal(expires_at, job["expires_at"])
+  end
+
+  def test_already_expired_job_is_not_enqueued
+    expires_at = Time.now.to_i - 100
+    ExpiringJob01.set(expires_at: expires_at).perform_async
+    assert_equal(0, Sidekiq::Queue.new.size)
   end
 
   private
