@@ -4,7 +4,15 @@ module SidekiqExpiringJobs
   module Middleware
     class Client
       def call(_worker_class, job, _queue, _redis_pool)
-        if (expires_in = job.delete("expires_in"))
+        # The job is requeued, e.g. by sidekiq-throttled gem. Do not update the expiration time.
+        if job["expires_at"] && job["expires_at"] < Time.now.to_f
+          Sidekiq.logger.info("[SidekiqExpiringJobs] Expired #{job['class']} job (jid=#{job['jid']}) is skipped")
+          SidekiqExpiringJobs.expiration_callback&.call(job)
+
+          return false
+        end
+
+        if (expires_in = job.delete("expires_in")) && job["expires_at"].nil?
           expires_in = expires_in.to_f
           raise ArgumentError, ":expires_in must be a relative time, not absolute time" if expires_in > 1_000_000_000
 

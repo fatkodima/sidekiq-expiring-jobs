@@ -1,5 +1,6 @@
 ## master (unreleased)
 
+- Do not recalculate `expires_at` if already exists
 - Drop support for Ruby < 3.2 and Sidekiq < 8.0
 
 ## 0.1.1 (2024-01-14)
