@@ -13,5 +13,5 @@ gem "rubocop-minitest"
 if defined?(@sidekiq_requirement)
   gem "sidekiq", @sidekiq_requirement
 else
-  gem "sidekiq" # latest
+  gem "sidekiq", "> 6" # min sidekiq version
 end
